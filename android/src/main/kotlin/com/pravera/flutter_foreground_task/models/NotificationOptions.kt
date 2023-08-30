@@ -20,7 +20,8 @@ data class NotificationOptions(
     val isSticky: Boolean,
     val visibility: Int,
     val iconData: NotificationIconData?,
-    val buttons: List<NotificationButton>
+    val buttons: List<NotificationButton>,
+    val badgeVisible : Boolean
 ) {
     companion object {
         fun getData(context: Context): NotificationOptions {
@@ -69,6 +70,8 @@ data class NotificationOptions(
                 }
             }
 
+            val badgeVisible = prefs.getBoolean(PrefsKey.BADGE_VISIBLE, true)
+
             return NotificationOptions(
                 id = id,
                 channelId = channelId,
@@ -84,7 +87,8 @@ data class NotificationOptions(
                 isSticky = isSticky,
                 visibility = visibility,
                 iconData = iconData,
-                buttons = buttons
+                buttons = buttons,
+                badgeVisible = badgeVisible
             )
         }
 
@@ -118,6 +122,8 @@ data class NotificationOptions(
                 buttonsJson = JSONArray(buttons).toString()
             }
 
+            val badgeVisible = map?.get(PrefsKey.BADGE_VISIBLE) as? Boolean ?: true
+
             with(prefs.edit()) {
                 putInt(PrefsKey.NOTIFICATION_ID, id)
                 putString(PrefsKey.NOTIFICATION_CHANNEL_ID, channelId)
@@ -134,6 +140,7 @@ data class NotificationOptions(
                 putInt(PrefsKey.VISIBILITY, visibility)
                 putString(PrefsKey.ICON_DATA, iconDataJson)
                 putString(PrefsKey.BUTTONS, buttonsJson)
+                putBoolean(PrefsKey.BADGE_VISIBLE, badgeVisible)
                 commit()
             }
         }
