@@ -216,6 +216,7 @@ class ForegroundService : Service(), MethodChannel.MethodCallHandler {
 					if (!notificationOptions.playSound) {
 						setSound(null, null)
 					}
+					setShowBadge(notificationOptions.badgeVisible)
 				}
 				nm.createNotificationChannel(channel)
 			}

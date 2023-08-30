@@ -21,6 +21,7 @@ class AndroidNotificationOptions {
     this.visibility = NotificationVisibility.VISIBILITY_PUBLIC,
     this.iconData,
     this.buttons,
+    this.badgeVisible = true,
   })  : assert(channelId.isNotEmpty),
         assert(channelName.isNotEmpty),
         assert((buttons?.length ?? 0) < 4);
@@ -76,6 +77,8 @@ class AndroidNotificationOptions {
   /// A maximum of 3 is allowed.
   final List<NotificationButton>? buttons;
 
+  final bool badgeVisible;
+
   /// Returns the data fields of [AndroidNotificationOptions] in JSON format.
   Map<String, dynamic> toJson() {
     return {
@@ -92,6 +95,7 @@ class AndroidNotificationOptions {
       'visibility': visibility.rawValue,
       'iconData': iconData?.toJson(),
       'buttons': buttons?.map((e) => e.toJson()).toList(),
+      'badgeVisible': badgeVisible
     };
   }
 }
